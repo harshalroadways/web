@@ -1,13 +1,10 @@
-# Builds the app and pushes ./dist to branch "gh-pages".
+# Builds the Vite app and publishes ./dist to the gh-pages branch (repo root).
 #
-# REQUIRED one-time setup (repo admin) — without this you will keep seeing
-# the blank page and /src/main.tsx 404:
-#
-#   Settings → Pages → Build and deployment → Source: "Deploy from a branch"
+# Match GitHub settings (what you have now):
+#   Settings → Pages → Source: Deploy from a branch
 #   Branch: gh-pages   Folder: / (root)
 #
-# Do NOT use Branch: main with Folder: / (root). That publishes the raw repo
-# (including index.html that points at /src/main.tsx), not the Vite build.
+# Pushes to main/master run this workflow; it does not trigger on gh-pages pushes.
 
 name: Deploy to GitHub Pages
 
@@ -20,8 +17,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -52,7 +49,7 @@ jobs:
           fi
           npm run build
 
-      - name: Deploy to gh-pages branch
+      - name: Push dist to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
