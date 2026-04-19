@@ -1,3 +1,7 @@
+# Deploy requires GitHub Pages to use Actions as the source (one-time):
+# Repo → Settings → Pages → Build and deployment → Source → GitHub Actions.
+# If Source is still "Deploy from a branch", deploy-pages fails with 404 when creating the deployment.
+
 name: Deploy to GitHub Pages
 
 on:
@@ -53,6 +57,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
