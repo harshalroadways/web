@@ -8,8 +8,12 @@ export default defineConfig(({ mode }) => {
   const siteUrl = (env.VITE_SITE_URL || 'https://example.com').replace(/\/$/, '')
 
   const contactApiPort = env.CONTACT_API_PORT || '8787'
+  const base = env.VITE_BASE?.trim() || '/'
+  const baseNormalized =
+    base === '/' ? '/' : base.endsWith('/') ? base : `${base}/`
 
   return {
+    base: baseNormalized,
     server: {
       proxy: {
         '/api': {
