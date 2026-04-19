@@ -1,26 +1,28 @@
-# Before deploy can succeed, enable Pages once: Settings → Pages → Source → GitHub Actions.
-# We do NOT use actions/configure-pages here: it calls GET /repos/.../pages and fails with 404
-# until Pages exists for the repo (same chicken-and-egg as deploy-pages if Pages is disabled).
-# Free orgs: public repo usually required; org owners may need to allow Pages for the organization.
+# Publishes ./dist to branch "gh-pages" (builds run from "main" only).
+#
+# One-time GitHub settings (repo admin):
+# Settings → Pages → Build and deployment → Source → Deploy from a branch
+# Branch: gh-pages, Folder: / (root)
+#
+# This avoids actions/deploy-pages, which returns 404 until the "GitHub Actions"
+# Pages integration is enabled for the repo/org.
 
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,41 +34,29 @@ jobs:
           node-version: '22'
           cache: npm
 
-      - name: Set Vite base and site URL for GitHub Pages
+      - name: Install dependencies
+        run: npm ci
+
+      # Set VITE_* in the same step as `vite build` so the base path is never lost
+      # (otherwise script/css requests go to /assets/... instead of /web/assets/...).
+      - name: Build
         run: |
           OWNER="${{ github.repository_owner }}"
           REPO="${{ github.event.repository.name }}"
           if [ "$REPO" = "$OWNER.github.io" ]; then
-            echo "VITE_BASE=/" >> "$GITHUB_ENV"
-            echo "VITE_SITE_URL=https://${OWNER}.github.io" >> "$GITHUB_ENV"
+            export VITE_BASE="/"
+            export VITE_SITE_URL="https://${OWNER}.github.io"
           else
-            echo "VITE_BASE=/${REPO}/" >> "$GITHUB_ENV"
-            echo "VITE_SITE_URL=https://${OWNER}.github.io/${REPO}" >> "$GITHUB_ENV"
+            export VITE_BASE="/${REPO}/"
+            export VITE_SITE_URL="https://${OWNER}.github.io/${REPO}"
           fi
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
+          npm run build
         env:
           GITHUB_PAGES: "true"
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
