@@ -1,6 +1,12 @@
 import { motion } from 'framer-motion'
 import { HiMoon, HiSun } from 'react-icons/hi2'
-import { OFFICE_ADDRESS, PHONE_DISPLAY, WHATSAPP_URL } from '../data/site'
+import {
+  MOBILE_DISPLAY,
+  MOBILE_TEL_HREF,
+  OFFICE_ADDRESS,
+  PHONE_DISPLAY,
+  WHATSAPP_URL,
+} from '../data/site'
 import { useTheme } from '../hooks/useTheme'
 import { scrollTransitionWithDelay, scrollViewport } from '../motion/scroll'
 import { Logo } from './Logo'
@@ -90,8 +96,14 @@ export function Footer() {
             </p>
             <p className="mt-4 text-sm">
               Email:{' '}
-              <a href="mailto:aryansaini1986@gmail.com" className="text-brand-400 hover:underline">
-                aryansaini1986@gmail.com
+              <a href="mailto:harshalroadways.jaipur@gmail.com" className="text-brand-400 hover:underline">
+                harshalroadways.jaipur@gmail.com
+              </a>
+            </p>
+            <p className="mt-2 text-sm">
+              Mobile:{' '}
+              <a href={MOBILE_TEL_HREF} className="text-brand-400 hover:underline">
+                {MOBILE_DISPLAY}
               </a>
             </p>
             <p className="mt-2 text-sm">

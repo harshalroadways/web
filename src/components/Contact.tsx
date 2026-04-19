@@ -1,11 +1,19 @@
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
 import { useState, type FormEvent } from 'react'
-import { OFFICE_ADDRESS, PHONE_DISPLAY, WHATSAPP_URL } from '../data/site'
+import {
+  GOOGLE_MAPS_EMBED_SRC,
+  GOOGLE_MAPS_SHARE_URL,
+  MOBILE_DISPLAY,
+  MOBILE_TEL_HREF,
+  OFFICE_ADDRESS,
+  PHONE_DISPLAY,
+  WHATSAPP_URL,
+} from '../data/site'
 import { scrollTransitionWithDelay, scrollViewport } from '../motion/scroll'
 import { SectionHeading } from './SectionHeading'
 
-const RECIPIENT_EMAIL = 'aryansaini1986@gmail.com'
+const RECIPIENT_EMAIL = 'harshalroadways.jaipur@gmail.com'
 
 const serviceTypes = [
   'House shifting',
@@ -51,7 +59,7 @@ function inquiryEmailBody(values: FormState): string {
   ].join('\n')
 }
 
-/** https://web3forms.com — access key must belong to a form that delivers to aryansaini1986@gmail.com */
+/** https://web3forms.com — access key must belong to a form that delivers to harshalroadways.jaipur@gmail.com */
 async function submitViaWeb3Forms(
   values: FormState,
   accessKey: string,
@@ -290,7 +298,7 @@ export function Contact() {
             <div className="overflow-hidden rounded-2xl border border-stone-200 shadow-lg dark:border-stone-800">
               <iframe
                 title="Harshal Roadways location on Google Maps"
-                src="https://www.google.com/maps?q=26.9705566%2C75.7549498&z=17&output=embed&hl=en"
+                src={GOOGLE_MAPS_EMBED_SRC}
                 className="h-72 w-full border-0 md:h-96"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -298,7 +306,7 @@ export function Contact() {
               />
             </div>
             <a
-              href="https://maps.app.goo.gl/a5YFZ54xqRQz68PP6"
+              href={GOOGLE_MAPS_SHARE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 inline-flex text-sm font-medium text-brand-600 underline-offset-4 hover:underline dark:text-brand-400"
@@ -309,6 +317,15 @@ export function Contact() {
               <li className="leading-relaxed">
                 <strong className="text-stone-900 dark:text-white">Office:</strong>{' '}
                 {OFFICE_ADDRESS}
+              </li>
+              <li>
+                <strong className="text-stone-900 dark:text-white">Mobile:</strong>{' '}
+                <a
+                  href={MOBILE_TEL_HREF}
+                  className="text-brand-600 hover:underline dark:text-brand-400"
+                >
+                  {MOBILE_DISPLAY}
+                </a>
               </li>
               <li>
                 <strong className="text-stone-900 dark:text-white">Email:</strong>{' '}

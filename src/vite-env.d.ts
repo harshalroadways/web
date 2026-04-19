@@ -11,7 +11,7 @@ interface ImportMetaEnv {
   readonly VITE_EMAILJS_PUBLIC_KEY?: string
   readonly VITE_EMAILJS_SERVICE_ID?: string
   readonly VITE_EMAILJS_TEMPLATE_ID?: string
-  /** https://web3forms.com — one access key; inbox is chosen in the Web3Forms dashboard (use aryansaini1986@gmail.com). */
+  /** https://web3forms.com — one access key; inbox is chosen in the Web3Forms dashboard (use harshalroadways.jaipur@gmail.com). */
   readonly VITE_WEB3FORMS_ACCESS_KEY?: string
   /** When `true`, contact form uses POST /api/inquiry (Node + nodemailer; see server/index.js). */
   readonly VITE_USE_NODE_MAIL?: string

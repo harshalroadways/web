@@ -8,7 +8,7 @@ import express from 'express'
 import nodemailer from 'nodemailer'
 
 const PORT = Number(process.env.CONTACT_API_PORT || 8787)
-const MAIL_TO = process.env.MAIL_TO || 'aryansaini1986@gmail.com'
+const MAIL_TO = process.env.MAIL_TO || 'harshalroadways.jaipur@gmail.com'
 const MAIL_FROM =
   process.env.MAIL_FROM || process.env.SMTP_USER || 'noreply@localhost'
 

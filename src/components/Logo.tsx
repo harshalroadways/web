@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { useId } from 'react'
 
 type LogoProps = {
   className?: string
@@ -27,33 +26,63 @@ const wordItem = {
   },
 }
 
-/** HR initials + road line — ties the mark to “Harshal Roadways” */
-function LogoMark({ gradientId }: { gradientId: string }) {
+/** Pointy-top hexagon vertices, center (50,50), radius R */
+function hexPoints(cx: number, cy: number, R: number): string {
+  const pts: string[] = []
+  for (let i = 0; i < 6; i++) {
+    const ang = (-90 + i * 60) * (Math.PI / 180)
+    const x = cx + R * Math.cos(ang)
+    const y = cy + R * Math.sin(ang)
+    pts.push(`${x.toFixed(3)},${y.toFixed(3)}`)
+  }
+  return pts.join(' ')
+}
+
+/**
+ * HR monogram in a hex frame — navy field, white inner ring, dark outer stroke.
+ * Serif “HR” (Georgia) with tight spacing to echo a monogram.
+ */
+function LogoMark() {
+  const outer = hexPoints(50, 50, 49.2)
+  const inner = hexPoints(50, 50, 42.5)
+
   return (
-    <svg viewBox="0 0 40 40" className="h-full w-full" aria-hidden>
-      <defs>
-        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#a855f7" />
-          <stop offset="100%" stopColor="#7c3aed" />
-        </linearGradient>
-      </defs>
-      <rect width="40" height="40" rx="10" fill={`url(#${gradientId})`} />
+    <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
+      {/* Outer hex: deep field + dark outline */}
+      <polygon
+        points={outer}
+        fill="#1a2744"
+        stroke="#070b14"
+        strokeWidth={1.25}
+        strokeLinejoin="round"
+      />
+      {/* Inner hex: white ring + slightly lighter face */}
+      <polygon
+        points={inner}
+        fill="#243056"
+        stroke="#f8fafc"
+        strokeWidth={2.35}
+        strokeLinejoin="round"
+      />
       <text
-        x="20"
-        y="25.5"
+        x={50}
+        y={59}
         textAnchor="middle"
-        fill="#fff"
-        fontSize="14.5"
-        fontWeight="700"
-        fontFamily="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-        letterSpacing="-0.07em"
+        fill="#ffffff"
+        fontSize={26}
+        fontWeight={700}
+        fontFamily="Georgia, 'Times New Roman', Times, serif"
+        letterSpacing="-0.2em"
+        style={{ paintOrder: 'stroke fill', stroke: 'rgba(0,0,0,0.06)', strokeWidth: 0.35 }}
       >
         HR
       </text>
-      <rect x="7" y="32.5" width="26" height="2" rx="1" fill="#fff" opacity="0.38" />
     </svg>
   )
 }
+
+/** Clip for pointy-top hex (matches SVG geometry) */
+const HEX_CLIP = 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
 
 export function Logo({
   className = '',
@@ -62,7 +91,6 @@ export function Logo({
   unifiedInverse = false,
 }: LogoProps) {
   const reduceMotion = useReducedMotion()
-  const gradId = useId().replace(/:/g, '')
 
   const floatLoop = reduceMotion
     ? false
@@ -70,9 +98,9 @@ export function Logo({
         y: [0, -4, 0],
         scale: [1, 1.03, 1],
         boxShadow: [
-          '0 10px 28px -6px rgba(168, 85, 247, 0.45)',
-          '0 18px 44px -8px rgba(124, 58, 237, 0.5)',
-          '0 10px 28px -6px rgba(168, 85, 247, 0.45)',
+          '0 10px 28px -6px rgba(30, 58, 138, 0.45)',
+          '0 18px 44px -8px rgba(15, 23, 42, 0.5)',
+          '0 10px 28px -6px rgba(30, 58, 138, 0.45)',
         ],
       }
 
@@ -95,20 +123,27 @@ export function Logo({
       <div className="relative h-11 w-11 shrink-0" aria-hidden>
         {!reduceMotion && (
           <motion.div
-            className="pointer-events-none absolute -inset-1 rounded-2xl bg-linear-to-br from-brand-400/40 via-royal-500/30 to-brand-600/40 opacity-80 blur-[2px]"
+            className="pointer-events-none absolute -inset-1 opacity-80 blur-[2px]"
+            style={{
+              background:
+                'linear-gradient(135deg, rgba(96, 165, 250, 0.35), rgba(30, 64, 175, 0.35), rgba(99, 102, 241, 0.3))',
+              clipPath: HEX_CLIP,
+              willChange: 'transform',
+            }}
             animate={spinLoop}
             transition={spinTransition}
-            style={{ willChange: 'transform' }}
           />
         )}
         <motion.div
-          className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-linear-to-br from-brand-500 to-royal-600 p-1 shadow-lg shadow-brand-500/30 ring-2 ring-white/35 dark:ring-stone-700/50"
+          className="relative flex h-11 w-11 items-center justify-center overflow-hidden p-[3px] shadow-lg shadow-slate-900/35 ring-2 ring-white/30 dark:ring-stone-600/45"
+          style={{ clipPath: HEX_CLIP }}
           animate={floatLoop || undefined}
           transition={floatTransition}
         >
           {!reduceMotion && (
             <motion.div
-              className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/25 to-transparent"
+              className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/22 to-transparent"
+              style={{ clipPath: HEX_CLIP }}
               initial={{ x: '-100%' }}
               animate={{ x: '200%' }}
               transition={{
@@ -120,11 +155,9 @@ export function Logo({
             />
           )}
           <motion.div
-            className="relative z-[1] h-9 w-9"
+            className="relative z-[1] h-[2.125rem] w-[2.125rem]"
             animate={
-              reduceMotion
-                ? undefined
-                : { x: [0, 1, 0], y: [0, -0.5, 0] }
+              reduceMotion ? undefined : { x: [0, 1, 0], y: [0, -0.5, 0] }
             }
             transition={
               reduceMotion
@@ -132,7 +165,7 @@ export function Logo({
                 : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }
             }
           >
-            <LogoMark gradientId={`hr-grad-${gradId}`} />
+            <LogoMark />
           </motion.div>
         </motion.div>
       </div>
