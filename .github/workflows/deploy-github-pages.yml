@@ -1,6 +1,8 @@
-# Deploy requires GitHub Pages to use Actions as the source (one-time):
-# Repo → Settings → Pages → Build and deployment → Source → GitHub Actions.
-# If Source is still "Deploy from a branch", deploy-pages fails with 404 when creating the deployment.
+# Prerequisites (otherwise deploy-pages often returns 404 on "create deployment"):
+# 1) Settings → Pages → Build and deployment → Source → GitHub Actions (not "Deploy from a branch").
+# 2) Free GitHub orgs: Pages only from public repos unless the org is on a paid plan — private repo → enable Pages may be blocked.
+# 3) Org owners: Settings → Pages (organization) → allow GitHub Pages if disabled for the org.
+# 4) This workflow uses actions/configure-pages before upload (same order as GitHub's static Pages template).
 
 name: Deploy to GitHub Pages
 
@@ -24,6 +26,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -66,4 +71,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
