@@ -1,11 +1,13 @@
-# Builds the Vite app and publishes ./dist via GitHub Pages (Actions).
+# Builds the app and pushes ./dist to branch "gh-pages".
 #
-# One-time setup (repo admin):
-# Settings → Pages → Build and deployment → Source: GitHub Actions
-# (Do NOT use "Deploy from a branch" with the default branch — that serves
-# raw source and the browser will request /src/main.tsx, which is not on Pages.)
+# REQUIRED one-time setup (repo admin) — without this you will keep seeing
+# the blank page and /src/main.tsx 404:
 #
-# After the first successful run, open the "github-pages" environment URL.
+#   Settings → Pages → Build and deployment → Source: "Deploy from a branch"
+#   Branch: gh-pages   Folder: / (root)
+#
+# Do NOT use Branch: main with Folder: / (root). That publishes the raw repo
+# (including index.html that points at /src/main.tsx), not the Vite build.
 
 name: Deploy to GitHub Pages
 
@@ -15,16 +17,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -52,19 +52,9 @@ jobs:
           fi
           npm run build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./dist
-          include-hidden-files: true
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
