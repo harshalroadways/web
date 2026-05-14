@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -20,7 +20,7 @@ export function Hero() {
     <section
       id="top"
       className="relative min-h-[min(92vh,900px)] overflow-hidden pt-[4.5rem]"
-      aria-label="Hero"
+      aria-label="Featured Harshal Roadways transport services"
     >
       <motion.div
         className="h-full min-h-[min(92vh,900px)] w-full"
@@ -31,13 +31,19 @@ export function Hero() {
       >
       <Swiper
         dir="rtl"
-        modules={[Autoplay, Navigation, Pagination]}
+        modules={[A11y, Autoplay, Navigation, Pagination]}
         speed={700}
         loop
         autoplay={{ delay: 7200, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         navigation
         className="hero-swiper h-full min-h-[min(92vh,900px)] w-full"
+        a11y={{
+          prevSlideMessage: 'Previous hero slide',
+          nextSlideMessage: 'Next hero slide',
+          paginationBulletMessage: 'Go to hero slide {{index}}',
+          containerMessage: 'Featured transport services slideshow',
+        }}
       >
         {heroSlides.map((slide) => (
           <SwiperSlide key={slide.title}>
@@ -59,6 +65,7 @@ export function Hero() {
                   }}
                   role="img"
                   aria-label={slide.alt}
+                  title={slide.alt}
                 />
                 <div
                   className="absolute inset-0 z-[1] bg-linear-to-br from-stone-950/88 via-brand-900/60 to-royal-900/50 dark:from-stone-950/92 dark:via-brand-900/65 dark:to-royal-900/45"
@@ -111,6 +118,7 @@ export function Hero() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => scrollToId('contact')}
+                      title="Request a free transport quote"
                     >
                       Get free quote
                     </motion.button>
@@ -120,6 +128,7 @@ export function Hero() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => scrollToId('services')}
+                      title="View packing and transport services"
                     >
                       View services
                     </motion.button>

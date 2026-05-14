@@ -14,6 +14,7 @@ import { Logo } from './Logo'
 /** Footer quick links (Contact & Reviews omitted — available in header / elsewhere) */
 const quick = [
   { id: 'about', label: 'About' },
+  { id: 'about-founder', label: 'Our Founder' },
   { id: 'services', label: 'Services' },
   { id: 'why-us', label: 'Why Us' },
   { id: 'coverage', label: 'Coverage' },
@@ -29,7 +30,10 @@ export function Footer() {
   const { theme, toggleTheme } = useTheme()
 
   return (
-    <footer className="border-t border-stone-200 bg-stone-900 text-stone-300 dark:border-stone-800">
+    <footer
+      className="border-t border-stone-200 bg-stone-900 text-stone-300 dark:border-stone-800"
+      aria-label="Site footer"
+    >
       <div className="mx-auto max-w-6xl px-4 py-14 md:px-6">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <motion.div
@@ -40,7 +44,7 @@ export function Footer() {
           >
             <Logo inverse unifiedInverse />
             <p className="mt-4 text-sm leading-relaxed">
-              Reliable transport, packing, and logistics across Rajasthan—with clear quotes and careful crews.
+            Providing reliable transportation, packing, and logistics services across Rajasthan with safe, timely, and efficient delivery solutions. We offer transparent pricing, and careful transportation to ensure your goods reach their destination securely.
             </p>
           </motion.div>
           <motion.div
@@ -59,6 +63,7 @@ export function Footer() {
                     type="button"
                     onClick={() => scrollToId(l.id)}
                     className="text-left text-sm hover:text-white"
+                    aria-label={`${l.label}: jump to section`}
                   >
                     {l.label}
                   </button>
@@ -95,14 +100,13 @@ export function Footer() {
               {OFFICE_ADDRESS}
             </p>
             <p className="mt-4 text-sm">
-              Email:{' '}
-              <a href="mailto:harshalroadways.jaipur@gmail.com" className="text-brand-400 hover:underline">
-                harshalroadways.jaipur@gmail.com
-              </a>
-            </p>
-            <p className="mt-2 text-sm">
               Mobile:{' '}
-              <a href={MOBILE_TEL_HREF} className="text-brand-400 hover:underline">
+              <a
+                href={MOBILE_TEL_HREF}
+                className="text-brand-400 hover:underline"
+                aria-label={`Call Harshal Roadways mobile ${MOBILE_DISPLAY}`}
+                title={`Call ${MOBILE_DISPLAY}`}
+              >
                 {MOBILE_DISPLAY}
               </a>
             </p>
@@ -113,6 +117,8 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand-400 hover:underline"
+                aria-label={`WhatsApp or phone Harshal Roadways at ${PHONE_DISPLAY}`}
+                title={`WhatsApp ${PHONE_DISPLAY}`}
               >
                 {PHONE_DISPLAY}
               </a>
@@ -134,6 +140,7 @@ export function Footer() {
             onClick={toggleTheme}
             className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-stone-600 bg-stone-800 px-3 py-2 text-xs font-medium text-stone-200 shadow-sm transition hover:bg-stone-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Use light theme' : 'Use dark theme'}
           >
             {theme === 'dark' ? (
               <HiSun className="h-5 w-5" aria-hidden />

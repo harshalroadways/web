@@ -1,7 +1,12 @@
 import { motion } from 'framer-motion'
+import { HiArrowRight } from 'react-icons/hi2'
 import { transportImages } from '../data/transport-images'
 import { scrollTransitionWithDelay, scrollViewport } from '../motion/scroll'
 import { SectionHeading } from './SectionHeading'
+
+function scrollToFounder() {
+  document.getElementById('about-founder')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 
 export function About() {
   return (
@@ -73,6 +78,7 @@ export function About() {
         <div className="dark:[&_p:last-of-type]:text-stone-200">
           <SectionHeading
             eyebrow="About us"
+            titleId="about-heading"
             title="Trusted logistics partner across Rajasthan"
             subtitle="Harshal Roadways combines local expertise with disciplined operations—so families and businesses get predictable moves, clear communication, and careful handling from pickup to delivery."
           />
@@ -86,23 +92,26 @@ export function About() {
             viewport={scrollViewport}
             transition={scrollTransitionWithDelay(0)}
           >
-            <h3 id="about-heading" className="font-display text-xl font-semibold text-stone-900 dark:text-white">
+            <h3
+              id="about-capabilities-heading"
+              className="font-display text-xl font-semibold text-stone-900 dark:text-white"
+            >
               Solid service for factories, households, and more
             </h3>
             <p className="mt-4 text-stone-600 dark:text-stone-300">
-              Whether you are moving a home, shifting a small office, or moving raw materials and finished goods from factories and warehouses, we match vehicles, crew, and packing to your load—not one-size-fits-all runs. The same care applies to household furniture and factory pallets alike.
+              Whether you are moving a home, shifting a small office, or moving raw materials and finished goods from factories and warehouses, we match vehicles, and packing to your load—not one-size-fits-all runs. The same care applies to household furniture and factory pallets alike.
             </p>
             <ul className="mt-6 space-y-3 text-stone-700 dark:text-stone-300">
               <li className="flex gap-3">
-                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-500" />
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-500" aria-hidden />
                 Factory & industrial: timed pickups, dock-friendly loading, and full or part truckload options
               </li>
               <li className="flex gap-3">
-                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-royal-500" />
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-royal-500" aria-hidden />
                 Household & residential: packing, careful handling, and room-by-room support for local and intercity moves
               </li>
               <li className="flex gap-3">
-                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-500" />
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-500" aria-hidden />
                 Offices, retail, and mixed jobs: clear quotes, supervised crews, and routes planned across Rajasthan and Delhi NCR
               </li>
             </ul>
@@ -118,6 +127,7 @@ export function About() {
             <img
               src={transportImages.aboutIndianTruck}
               alt="Decorated Indian heavy-duty cargo truck on the road — regional transport and logistics"
+              title="Harshal Roadways — fleet and road transport in Rajasthan"
               className="about-truck-img h-full min-h-[280px] w-full scale-110 object-cover object-center motion-safe:animate-[about-truck-kenburns_26s_ease-in-out_infinite_alternate] motion-reduce:animate-none motion-reduce:scale-100 transition-[filter] duration-700 group-hover:brightness-110"
               loading="lazy"
               decoding="async"
@@ -129,6 +139,28 @@ export function About() {
             </p>
           </motion.div>
         </div>
+
+        <motion.div
+          className="mt-10 flex justify-center md:mt-12"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={scrollViewport}
+          transition={scrollTransitionWithDelay(0.12)}
+        >
+          <a
+            href="#about-founder"
+            className="inline-flex items-center gap-2 rounded-xl px-1 py-2 text-sm font-semibold text-brand-700 underline-offset-4 ring-brand-500/30 transition hover:text-brand-600 hover:underline focus:outline-none focus-visible:ring-2 dark:text-brand-400 dark:hover:text-brand-300"
+            onClick={(e) => {
+              e.preventDefault()
+              scrollToFounder()
+            }}
+            aria-label="Our Founder: jump to section"
+            title="Our Founder"
+          >
+            Our Founder
+            <HiArrowRight className="h-4 w-4 shrink-0" aria-hidden />
+          </a>
+        </motion.div>
       </div>
 
       <style>{`

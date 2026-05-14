@@ -135,10 +135,22 @@ export function ServiceChart() {
           viewport={scrollViewport}
           transition={scrollTransitionWithDelay(0.12)}
         >
-          <h3 className="mb-6 text-center font-display text-lg font-semibold text-stone-900 dark:text-white">
+          <h3
+            id="service-mix-chart-title"
+            className="mb-6 text-center font-display text-lg font-semibold text-stone-900 dark:text-white"
+          >
             Service mix by category
           </h3>
-          <div className="h-[360px] w-full min-w-0 md:h-[400px]">
+          <p id="service-mix-chart-desc" className="sr-only">
+            Illustrative pie chart: goods transportation 70 percent, house shifting 15 percent, office
+            relocation 9 percent, loading and unloading 6 percent.
+          </p>
+          <div
+            className="h-[360px] w-full min-w-0 md:h-[400px]"
+            role="region"
+            aria-labelledby="service-mix-chart-title"
+            aria-describedby="service-mix-chart-desc"
+          >
             <ResponsiveContainer
               width="100%"
               height="100%"

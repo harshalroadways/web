@@ -298,6 +298,7 @@ export function Contact() {
             <div className="overflow-hidden rounded-2xl border border-stone-200 shadow-lg dark:border-stone-800">
               <iframe
                 title="Harshal Roadways location on Google Maps"
+                aria-label="Embedded map showing Harshal Roadways office location"
                 src={GOOGLE_MAPS_EMBED_SRC}
                 className="h-72 w-full border-0 md:h-96"
                 loading="lazy"
@@ -310,6 +311,8 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 inline-flex text-sm font-medium text-brand-600 underline-offset-4 hover:underline dark:text-brand-400"
+              aria-label="Open Harshal Roadways pinned office location in Google Maps (opens in new tab)"
+              title="Open in Google Maps"
             >
               Open pinned location in Google Maps
             </a>
@@ -323,13 +326,20 @@ export function Contact() {
                 <a
                   href={MOBILE_TEL_HREF}
                   className="text-brand-600 hover:underline dark:text-brand-400"
+                  aria-label={`Call Harshal Roadways mobile ${MOBILE_DISPLAY}`}
+                  title={`Call ${MOBILE_DISPLAY}`}
                 >
                   {MOBILE_DISPLAY}
                 </a>
               </li>
               <li>
                 <strong className="text-stone-900 dark:text-white">Email:</strong>{' '}
-                <a href={`mailto:${RECIPIENT_EMAIL}`} className="text-brand-600 hover:underline dark:text-brand-400">
+                <a
+                  href={`mailto:${RECIPIENT_EMAIL}`}
+                  className="text-brand-600 hover:underline dark:text-brand-400"
+                  aria-label={`Email Harshal Roadways at ${RECIPIENT_EMAIL}`}
+                  title="Send email to Harshal Roadways"
+                >
                   {RECIPIENT_EMAIL}
                 </a>
               </li>
@@ -340,6 +350,8 @@ export function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brand-600 hover:underline dark:text-brand-400"
+                  aria-label={`Chat on WhatsApp with Harshal Roadways at ${PHONE_DISPLAY}`}
+                  title={`WhatsApp ${PHONE_DISPLAY}`}
                 >
                   {PHONE_DISPLAY}
                 </a>
@@ -355,6 +367,7 @@ export function Contact() {
             viewport={scrollViewport}
             transition={scrollTransitionWithDelay(0.08)}
             noValidate
+            aria-label="Request a transport or relocation quote"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2">
@@ -486,6 +499,7 @@ export function Contact() {
             <motion.button
               type="submit"
               disabled={loading}
+              aria-busy={loading}
               className="mt-6 w-full rounded-xl bg-linear-to-r from-brand-500 to-royal-600 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition hover:brightness-110 disabled:opacity-60"
               whileHover={{ scale: loading ? 1 : 1.01 }}
               whileTap={{ scale: loading ? 1 : 0.99 }}

@@ -26,7 +26,7 @@ const services = [
   {
     title: 'Loading and unloading',
     description:
-      'Experienced crews with equipment for heavy lifts, narrow entries, and multi-floor buildings.',
+      'Experienced drivers with equipment for heavy lifts, narrow entries, and multi-floor buildings.',
     icon: FaPeopleCarry,
   },
 ]

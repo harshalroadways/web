@@ -75,6 +75,7 @@ export function Coverage() {
 
         <motion.ul
           className="flex flex-wrap justify-center gap-3"
+          aria-label="Cities and regions we serve"
           initial="hidden"
           whileInView="show"
           viewport={scrollViewport}

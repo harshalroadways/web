@@ -21,7 +21,7 @@ export const heroSlides: readonly HeroSlide[] = [
     service: 'Regional & intercity routes',
     title: 'Reliable Transport Service in Rajasthan',
     subtitle:
-      'Door-to-door logistics with trained crews, insured handling, and transparent pricing across the state.',
+      'Door-to-door logistics with trained drivers, insured handling, and transparent pricing across the state.',
     highlights: [
       'Jaipur, Jodhpur, Udaipur & statewide lanes—pickup and drop where you need them',
       'Crews briefed on your cargo type, not one generic checklist',

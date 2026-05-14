@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Autoplay } from 'swiper/modules'
+import { A11y, Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { FaStar } from 'react-icons/fa'
@@ -19,7 +19,7 @@ const reviews = [
     name: 'Vikram Singh',
     place: 'Jodhpur local',
     text:
-      'Household shifting with fragile decor. Crew used padding everywhere and communicated delays clearly.',
+      'Household shifting with fragile decor. Driveer used padding everywhere and communicated delays clearly.',
     rating: 5,
   },
   {
@@ -43,6 +43,7 @@ export function Testimonials() {
     <section
       id="testimonials"
       className="relative overflow-hidden py-20 md:py-28"
+      aria-labelledby="testimonials-heading"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-[0.18] dark:opacity-[0.12]"
@@ -53,12 +54,13 @@ export function Testimonials() {
       <div className="relative mx-auto max-w-6xl px-4 md:px-6">
         <SectionHeading
           eyebrow="Testimonials"
+          titleId="testimonials-heading"
           title="Customers who moved with confidence"
           subtitle="Feedback from families and businesses—we refine routes and crew briefings from every job."
         />
 
         <Swiper
-          modules={[Autoplay]}
+          modules={[A11y, Autoplay]}
           spaceBetween={24}
           slidesPerView={1}
           breakpoints={{
@@ -69,6 +71,12 @@ export function Testimonials() {
           autoplay={{ delay: 6000, disableOnInteraction: true }}
           loop
           className="!pb-2"
+          a11y={{
+            prevSlideMessage: 'Previous testimonial',
+            nextSlideMessage: 'Next testimonial',
+            paginationBulletMessage: 'Go to testimonial {{index}}',
+            containerMessage: 'Customer testimonials carousel',
+          }}
         >
           {reviews.map((r) => (
             <SwiperSlide key={r.name}>
@@ -85,6 +93,7 @@ export function Testimonials() {
                     <FaStar
                       key={i}
                       className={i < r.rating ? 'opacity-100' : 'opacity-25'}
+                      aria-hidden
                     />
                   ))}
                 </div>

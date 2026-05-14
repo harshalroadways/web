@@ -50,6 +50,8 @@ export function Header() {
         <a
           href="#top"
           className="focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-950"
+          aria-label="Harshal Roadways — back to top"
+          title="Back to top"
           onClick={(e) => {
             e.preventDefault()
             scrollToId('top')
@@ -65,6 +67,7 @@ export function Header() {
               type="button"
               onClick={() => scrollToId(link.id)}
               className="rounded-lg px-3 py-2 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-900 dark:text-stone-300 dark:hover:bg-stone-800 dark:hover:text-white"
+              aria-label={`${link.label}: jump to section`}
             >
               {link.label}
             </button>
@@ -78,6 +81,7 @@ export function Header() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl border border-stone-200 bg-white/90 px-2.5 py-2 text-xs font-semibold text-brand-700 shadow-sm transition hover:bg-brand-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 dark:border-stone-600 dark:bg-stone-900/90 dark:text-brand-300 dark:hover:bg-stone-800 dark:focus-visible:ring-offset-stone-950 sm:px-3 sm:text-sm"
             aria-label={`Chat on WhatsApp at ${PHONE_DISPLAY}`}
+            title={`WhatsApp ${PHONE_DISPLAY}`}
           >
             <FaWhatsapp className="h-4 w-4 shrink-0 text-[#25D366] sm:h-[1.125rem] sm:w-[1.125rem]" aria-hidden />
             <span className="hidden min-[375px]:inline">{PHONE_DISPLAY}</span>
@@ -86,6 +90,8 @@ export function Header() {
             type="button"
             className="hidden rounded-xl bg-linear-to-r from-brand-500 to-royal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-500/30 transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-950 lg:inline-flex"
             onClick={() => scrollToId('contact')}
+            aria-label="Get a free quote — scroll to contact form"
+            title="Request a quote"
           >
             Get quote
           </button>
@@ -96,6 +102,8 @@ export function Header() {
               setOpen(false)
               scrollToId('contact')
             }}
+            aria-label="Get a free quote — scroll to contact form"
+            title="Request a quote"
           >
             Get quote
           </button>
@@ -105,9 +113,14 @@ export function Header() {
             className="rounded-lg p-2 text-stone-800 lg:hidden dark:text-stone-100"
             aria-expanded={open}
             aria-controls="mobile-menu"
+            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <HiXMark className="h-7 w-7" /> : <HiBars3 className="h-7 w-7" />}
+            {open ? (
+              <HiXMark className="h-7 w-7" aria-hidden />
+            ) : (
+              <HiBars3 className="h-7 w-7" aria-hidden />
+            )}
           </button>
         </div>
       </div>
@@ -127,6 +140,8 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mb-2 flex items-center justify-center gap-2 rounded-xl border border-brand-200 bg-brand-50 py-3 text-base font-semibold text-brand-800 transition hover:bg-brand-100 dark:border-brand-800 dark:bg-brand-950/50 dark:text-brand-200 dark:hover:bg-brand-900/50"
+                aria-label={`Chat on WhatsApp at ${PHONE_DISPLAY}`}
+                title={`WhatsApp ${PHONE_DISPLAY}`}
               >
                 <FaWhatsapp className="h-5 w-5 shrink-0 text-[#25D366]" aria-hidden />
                 WhatsApp {PHONE_DISPLAY}
@@ -140,6 +155,7 @@ export function Header() {
                     setOpen(false)
                     scrollToId(link.id)
                   }}
+                  aria-label={`${link.label}: jump to section`}
                 >
                   {link.label}
                 </button>

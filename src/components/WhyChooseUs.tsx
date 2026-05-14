@@ -38,19 +38,21 @@ export function WhyChooseUs() {
     <section
       id="why-us"
       className="relative overflow-hidden py-20 md:py-28"
+      aria-labelledby="why-us-heading"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25 dark:opacity-20"
         style={{ backgroundImage: `url(${transportImages.bgWhyUs})` }}
         aria-hidden
       />
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-white/92 via-white/88 to-brand-50/80 dark:from-[#0f0618]/95 dark:via-[#0f0618]/90 dark:to-stone-950/95" />
-      <div className="pointer-events-none absolute -right-24 top-20 h-72 w-72 rounded-full bg-brand-400/20 blur-3xl dark:bg-brand-500/10" />
-      <div className="pointer-events-none absolute -left-24 bottom-20 h-72 w-72 rounded-full bg-royal-500/15 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-white/92 via-white/88 to-brand-50/80 dark:from-[#0f0618]/95 dark:via-[#0f0618]/90 dark:to-stone-950/95" aria-hidden />
+      <div className="pointer-events-none absolute -right-24 top-20 h-72 w-72 rounded-full bg-brand-400/20 blur-3xl dark:bg-brand-500/10" aria-hidden />
+      <div className="pointer-events-none absolute -left-24 bottom-20 h-72 w-72 rounded-full bg-royal-500/15 blur-3xl" aria-hidden />
 
       <div className="relative mx-auto max-w-6xl px-4 md:px-6">
         <SectionHeading
           eyebrow="Why choose us"
+          titleId="why-us-heading"
           title="Built for reliability on Rajasthan roads"
           subtitle="We invest in people, process, and communication—so your shipment feels controlled even when the route is not."
         />
