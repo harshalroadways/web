@@ -59,4 +59,9 @@
   html.custom-cursor-on summary {
     cursor: none;
   }
+
+  /* Fixed header (~4.5rem) — in-page #hash targets clear the nav */
+  #main-content > section[id] {
+    scroll-margin-top: 5.5rem;
+  }
 }

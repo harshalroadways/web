@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { FaWhatsapp } from 'react-icons/fa'
 import { HiBars3, HiXMark } from 'react-icons/hi2'
 import { PHONE_DISPLAY, WHATSAPP_URL } from '../data/site'
+import { goToSection } from '../lib/sectionNav'
 import { Logo } from './Logo'
 
 const navLinks = [
@@ -14,11 +15,6 @@ const navLinks = [
   { id: 'testimonials', label: 'Reviews' },
   { id: 'contact', label: 'Contact' },
 ]
-
-function scrollToId(id: string) {
-  const el = document.getElementById(id)
-  el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -54,7 +50,7 @@ export function Header() {
           title="Back to top"
           onClick={(e) => {
             e.preventDefault()
-            scrollToId('top')
+            goToSection('top')
           }}
         >
           <Logo />
@@ -65,7 +61,7 @@ export function Header() {
             <button
               key={link.id}
               type="button"
-              onClick={() => scrollToId(link.id)}
+              onClick={() => goToSection(link.id)}
               className="rounded-lg px-3 py-2 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-900 dark:text-stone-300 dark:hover:bg-stone-800 dark:hover:text-white"
               aria-label={`${link.label}: jump to section`}
             >
@@ -89,7 +85,7 @@ export function Header() {
           <button
             type="button"
             className="hidden rounded-xl bg-linear-to-r from-brand-500 to-royal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-500/30 transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-950 lg:inline-flex"
-            onClick={() => scrollToId('contact')}
+            onClick={() => goToSection('contact')}
             aria-label="Get a free quote — scroll to contact form"
             title="Request a quote"
           >
@@ -100,7 +96,7 @@ export function Header() {
             className="rounded-xl bg-linear-to-r from-brand-500 to-royal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-500/30 transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-950 lg:hidden"
             onClick={() => {
               setOpen(false)
-              scrollToId('contact')
+              goToSection('contact')
             }}
             aria-label="Get a free quote — scroll to contact form"
             title="Request a quote"
@@ -153,7 +149,7 @@ export function Header() {
                   className="rounded-lg px-3 py-3 text-left text-base font-medium text-stone-800 hover:bg-stone-100 dark:text-stone-100 dark:hover:bg-stone-900"
                   onClick={() => {
                     setOpen(false)
-                    scrollToId(link.id)
+                    goToSection(link.id)
                   }}
                   aria-label={`${link.label}: jump to section`}
                 >

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { About } from './components/About'
 import { AnimatedCursor } from './components/AnimatedCursor'
 import { Contact } from './components/Contact'
@@ -12,8 +13,27 @@ import { Testimonials } from './components/Testimonials'
 import { WhatsAppButton } from './components/WhatsAppButton'
 import { WhyChooseUs } from './components/WhyChooseUs'
 import { ThemeProvider } from './context/ThemeProvider'
+import { scrollToCurrentHash, startSmoothScrollToUrlHash } from './lib/sectionNav'
 
 function App() {
+  useEffect(() => {
+    const prevRestoration = history.scrollRestoration
+    history.scrollRestoration = 'manual'
+
+    const stopInitial = startSmoothScrollToUrlHash()
+
+    const onHashOrPop = () => scrollToCurrentHash()
+    window.addEventListener('hashchange', onHashOrPop)
+    window.addEventListener('popstate', onHashOrPop)
+
+    return () => {
+      stopInitial()
+      history.scrollRestoration = prevRestoration
+      window.removeEventListener('hashchange', onHashOrPop)
+      window.removeEventListener('popstate', onHashOrPop)
+    }
+  }, [])
+
   return (
     <ThemeProvider>
       <AnimatedCursor />

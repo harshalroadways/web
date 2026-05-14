@@ -9,6 +9,7 @@ import {
 } from '../data/site'
 import { useTheme } from '../hooks/useTheme'
 import { scrollTransitionWithDelay, scrollViewport } from '../motion/scroll'
+import { goToSection } from '../lib/sectionNav'
 import { Logo } from './Logo'
 
 /** Footer quick links (Contact & Reviews omitted — available in header / elsewhere) */
@@ -20,10 +21,6 @@ const quick = [
   { id: 'coverage', label: 'Coverage' },
   { id: 'stats', label: 'Insights' },
 ]
-
-function scrollToId(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-}
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -61,7 +58,7 @@ export function Footer() {
                 <li key={l.id}>
                   <button
                     type="button"
-                    onClick={() => scrollToId(l.id)}
+                    onClick={() => goToSection(l.id)}
                     className="text-left text-sm hover:text-white"
                     aria-label={`${l.label}: jump to section`}
                   >
